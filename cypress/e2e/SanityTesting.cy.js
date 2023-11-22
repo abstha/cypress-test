@@ -81,7 +81,7 @@ describe("low balance testing", () => {
   });
 });
 
-describe("Buying data packs", () => {
+describe("adequate balance testing", () => {
   it("checks if the balance is enough to buy the data pack", () => {
     cy.fixture("TestData.json").then((testData) => {
       cy.readFile(
@@ -143,7 +143,7 @@ describe("Buying data packs", () => {
   });
 });
 
-describe("usage test", () => {
+describe("Resource usage testing", () => {
   it("Uses a app for 1 minute", () => {
     cy.exec(
       'node "C:/Users/abhinav/Desktop/automation tests/Mobile Testing/Samsung.js" usageTest',
@@ -170,7 +170,7 @@ describe("usage test", () => {
   });
 });
 
-describe("Multiple activation tests", () => {
+describe("Multiple activation testing", () => {
   it("checks if multiple activation is allowed or not", () => {
     cy.fixture("TestData.json").then((testData) => {
       cy.log(testData.packName);
@@ -180,7 +180,5 @@ describe("Multiple activation tests", () => {
     });
   });
 
-  it("checks the priority between two packs according to their validity", ()=>{
-    
-  })
+  it("checks the priority between two packs according to their validity", () => {});
 });

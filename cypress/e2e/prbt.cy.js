@@ -1,40 +1,43 @@
-const number = "9779800015083";
+const { describe } = require("mocha");
+const xlsx = require("node-xlsx");
+const fs = require("fs");
 
-// describe("PRBT tests", () => {
-//   it("tests if the user can login to the PRBT website", () => {
-//     cy.visit("https://prbt.ncell.axiata.com");
-//     cy.contains("More").click();
-//     cy.contains("Buy").click();
-//     cy.get('input[name="user"]').eq(0).type(number, { force: true });
-//   });
-// });
+const fileName = "testResult.xlsx";
+let testResult = [];
 
-// describe("login test", () => {
-//   it("logs the user into the system", () => {
-//     cy.visit("https://prbt.ncell.axiata.com/music/portal/#/home");
-//     cy.pause();
-//     cy.contains("Login").click({ force: true });
-//     cy.get('input[ng-model="mobileno"]')
-//       .eq(0)
-//       .type("9800015053", { force: true });
-//     cy.pause();
-//     cy.contains("SEND OTP").click({ force: true });
-//     cy.get('button[title="Validate Password"]').click();
-//   });
-// });
+before(() => {
+  testResult = [];
+  testResult.push(["Test Case", "Status"]); 
+});
 
-// describe("buying a prbt", () => {
-//   it("checks if the user can buy a prbt", () => {
-//     cy.visit("https://prbt.ncell.axiata.com");
-//     cy.contains("More").click();
+after(() => {
+  const data = [{ name: "My Sheet", data: testResult }];
+  const buffer = xlsx.build(data);
 
-//     cy.contains("Buy").click();
+  try {
+    fs.writeFileSync(fileName, buffer);
+    console.log("File created");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
-//     cy.get("[placeholder='Mobile Number']")
-//       .eq(1)
-//       .type("9800015053", { force: true });
+describe("test 1 ", () => {
+  it("checks 1", () => {
+    let abc = false;
+    if (abc) {
+      testResult.push(["Test1", "Pass"]);
+    } else {
+      testResult.push(["Test1", "Fail"]);
+    }
+  });
 
-//     cy.get("[title='Get Password']").click();
-//   });
-// });
-
+  it("checks 2", () => {
+    let bcd = true;
+    if (bcd) {
+      testResult.push(["Test2", "Pass"]);
+    } else {
+      testResult.push(["Test2", "Fail"]);
+    }
+  });
+});

@@ -1,27 +1,12 @@
 
-[{
+{
     "phoneNumber": 9800015053,
     "pack" : "Rs. 145",
     "packName" : "1 Day - 200MB",
     "password" : "test12345@",
     "packResource" : "200.00 MB",
     "dashboardName" : "Of Rs 15 Data"
-},
-{
-    "phoneNumber": 9800015053,
-    "pack" : "Rs. 75",
-    "packName" : "5 hours unlimited",
-    "password" : "test12345@",
-    "packResource" : "300 mins",
-    "dashboardName" : "Of Rs 75_UNL"
-},
-{
-    "phoneNumber": 9800015053,
-    "pack" : "Rs. 300",
-    "packName" : "28 days data",
-    "password" : "test12345@",
-    "packResource" : "28 days",
-    "dashboardName" : "Of Rs 300_Data"
-}]
+}
+
 
 

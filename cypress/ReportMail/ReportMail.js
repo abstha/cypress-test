@@ -4,13 +4,6 @@ const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const fs = require("fs");
 
-// // Log all environment variables loaded from the .env file
-// console.log("USER_EMAIL:", process.env.USER_EMAIL);
-// console.log("CLIENT_ID:", process.env.CLIENT_ID);
-// console.log("CLIENT_SECRET:", process.env.CLIENT_SECRET);
-// console.log("REFRESH_TOKEN:", process.env.REFRESH_TOKEN);
-// console.log("ACCESS_TOKEN:", process.env.ACCESS_TOKEN);
-
 const createTransporter = async () => {
   try {
     const oauth2Client = new OAuth2(
@@ -57,7 +50,7 @@ const sendMail = async () => {
 
     const mailOptions = {
       from: process.env.USER_EMAIL,
-      to: "nitesh.khadka@ncell.axiata.com", // Add your recipient's email here
+      to: "abhinavshrestha03@gmail.com", // Add your recipient's email here
       subject: "Mochawesome Report",
       text: "This mail contains the report for the sanity testing conducted at '', for '' data packs. ",
       attachments: [

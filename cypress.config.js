@@ -14,6 +14,7 @@ module.exports = defineConfig({
       html: true,
       json: true,
       inline: true,
+      charts: true,
     },
   },
   // Other Cypress configuration options...

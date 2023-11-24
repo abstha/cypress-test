@@ -13,6 +13,17 @@ function Login(number, password) {
 
 describe("low balance testing", () => {
   it("checks if the balance is enough to buy the data pack", () => {
+    cy.exec(
+      'node "C:/Users/abhinav/Desktop/automation tests/Mobile testing/Samsung.js" balance',
+      { log: true }
+    ).then(({ stdout, stderr }) => {
+      if (stdout) {
+        cy.log(`Standard output:\n${stdout}`);
+      }
+      if (stderr) {
+        cy.log(`Error output:\n${stderr}`);
+      }
+    });
     cy.fixture("TestData.json").then((testData) => {
       cy.readFile(
         "C:/Users/abhinav/Desktop/automation tests/cypress test/resourceDetails/OTP.json",
@@ -47,7 +58,9 @@ describe("low balance testing", () => {
 
       cy.contains("Load More").click();
       cy.wait(2000);
-      cy.contains(testData.packName).click();
+      // cy.contains(testData.packName).click();
+
+      cy.contains(testData.pack).click();
       cy.contains("Buy Now").click();
       cy.get('[name="phoneNumber"]').type(testData.phoneNumber);
       cy.contains("Continue").click();
@@ -76,6 +89,8 @@ describe("low balance testing", () => {
             );
           }
         });
+        cy.contains("Continue").click();
+        cy.contains("Insufficient Balance").should("be.visible");
       });
     });
   });
@@ -136,9 +151,11 @@ describe("adequate balance testing", () => {
       cy.get("p.list_title").contains(testData.dashboardName);
 
       cy.contains("p.list_title", testData.dashboardName)
-        .closest(".single_list") // Use closest to find the ancestor element
+        .closest(".single_list") //.closest finds the closest element in regards to the parent element
         .find(".progress-bar")
         .should("have.attr", "aria-valuenow", "100%");
+
+      cy.contains();
     });
   });
 });
@@ -147,7 +164,7 @@ describe("Resource usage testing", () => {
   it("Uses a app for 1 minute", () => {
     cy.exec(
       'node "C:/Users/abhinav/Desktop/automation tests/Mobile Testing/Samsung.js" usageTest',
-      { timeout: 61000 }
+      { timeout: 90000 }
     );
   });
 
@@ -166,6 +183,22 @@ describe("Resource usage testing", () => {
       //     const currentValue = parseInt(value.replace("%", ""), 10);
       //     expect(currentValue).to.be.lessThan(100);
       //   });
+      const packNameToCheck = data.packName; // Retrieve the pack name from the fixture
+
+
+      // Find the pack-related element
+      cy.contains(".list_title", packNameToCheck).then(($packElement) => {
+        // Traverse to the progress bar associated with this pack
+        const progressBar = $packElement
+          .closest(".single_list")
+          .find(".progress-bar");
+
+        // Get the width of the progress bar
+        const progressBarWidth = parseFloat(progressBar.css("width"));
+
+        // Assert the progress bar value is less than 100% (change the condition based on your requirement)
+        expect(progressBarWidth).to.be.lessThan(100);
+      });
     });
   });
 });
@@ -180,5 +213,10 @@ describe("Multiple activation testing", () => {
     });
   });
 
-  it("checks the priority between two packs according to their validity", () => {});
+  it("checks the priority between two packs according to their validity", () => {
+    cy.visit("https://ncell.axiata.com/en/dashboard").should(
+      "have.text",
+      "5 Hours Unlimited Data"
+    );
+  });
 });

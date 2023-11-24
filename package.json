@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cypress-test": "npx cypress run --headed --spec cypress/e2e/SanityTesting.cy.js --browser chrome", 
+    "send-email": "cd cypress/ReportMail && node ReportMail.js", 
+    "test": "npm run cypress-test && npm run send-email"
   },
   "author": "",
   "license": "ISC",

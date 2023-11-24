@@ -46,7 +46,7 @@ const createTransporter = async () => {
 const sendMail = async () => {
   try {
     const filePath =
-      "C:/Users/abhinav/Desktop/automation tests/cypress test/cypress/reports/mochawesome/mochawesome.html"; // Replace with your file path
+      "C:/Users/abhinav/Desktop/automation tests/cypress test/cypress/reports/mochawesome/SanityTesting.html"; // Replace with your file path
 
     const mailOptions = {
       from: process.env.USER_EMAIL,
@@ -55,7 +55,7 @@ const sendMail = async () => {
       text: "This mail contains the report for the sanity testing conducted at '', for '' data packs. ",
       attachments: [
         {
-          filename: "mochawesome.html", // Name of the attached file
+          filename: "SanityTesting.html", // Name of the attached file
           content: fs.createReadStream(filePath), // Read file content as stream
         },
       ],

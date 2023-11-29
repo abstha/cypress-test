@@ -12,7 +12,7 @@ function Login(number, password) {
   cy.get('button[class="btn_primary blockEl"]').click();
 }
 
-function performTests(fixtureData) {
+function performTests(fixtureData, index) {
   describe("low balance testing", () => {
     it("checks if the balance is enough to buy the data pack", () => {
       cy.exec(
@@ -120,17 +120,23 @@ function performTests(fixtureData) {
     });
 
     it("buys the Rs 265 voice pack", () => {
-      cy.exec(
-        'node "C:/Users/abhinav/Desktop/automation tests/Mobile testing/Samsung.js" buyDataPack',
-        { log: true }
-      ).then(({ stdout, stderr }) => {
-        if (stdout) {
-          cy.log(`Standard output:\n${stdout}`);
-        }
-        if (stderr) {
-          cy.log(`Error output:\n${stderr}`);
-        }
-      });
+      if (index == 0) {
+        cy.exec(
+          'node "C:/Users/abhinav/Desktop/automation tests/Mobile testing/Samsung.js" buyDataPack',
+          { log: true }
+        ).then(({ stdout, stderr }) => {
+          if (stdout) {
+            cy.log(`Standard output:\n${stdout}`);
+          }
+          if (stderr) {
+            cy.log(`Error output:\n${stderr}`);
+          }
+        });
+      } else {
+        cy.exec(
+          'node "C:/Users/abhinav/Desktop/automation tests/Mobile testing/Samsung.js" buyDataPack2'
+        );
+      }
     });
 
     it("checks if the product has been activated or not", () => {
@@ -143,14 +149,19 @@ function performTests(fixtureData) {
       cy.contains("button.btn_secondary.btm__btn", "Details").click();
       cy.contains(fixtureData.packResource);
 
-      cy.get("p.list_title").contains(fixtureData.dashboardName);
+      cy.get("p.list_title")
+        .contains(fixtureData.dashboardName)
+        .should("exist");
 
-      cy.contains("p.list_title", fixtureData.dashboardName)
-        .closest(".single_list") //.closest finds the closest element in regards to the parent element
-        .find(".progress-bar")
-        .should("have.attr", "aria-valuenow", "100%");
-
-      cy.contains();
+      cy.get(".list_title")
+        .contains(fixtureData.dashboardName)
+        .parent()
+        .within(() => {
+          cy.get(".list_info span:last-child").should(
+            "contain",
+            fixtureData.packResource
+          );
+        });
     });
   });
 
@@ -166,32 +177,22 @@ function performTests(fixtureData) {
       Login(fixtureData.phoneNumber, fixtureData.password);
 
       cy.wait(10000);
-      cy.get("p.list_title")
+      cy.get(".list_title")
         .contains(fixtureData.dashboardName)
-        .should("exist");
+        .parent()
+        .within(() => {
+          cy.get(".list_info span:first-child").should("contain", "25.00 GB");
+        });
 
-      // cy.contains("p.list_title", "Of Rs 25 Data")
-      //   .closest(".single_list")
-      //   .find(".progress-bar")
-      //   .invoke("attr", "aria-valuenow")
-      //   .then((value) => {
-      //     const currentValue = parseInt(value.replace("%", ""), 10);
-      //     expect(currentValue).to.be.lessThan(100);
-      //   });
-      const packNameToCheck = fixtureData.packName; // Retrieve the pack name from the fixture
+      //this checks the first span value is less than second. still in progress
+      cy.get(".list_info span:first-child").then(($firstSpan) => {
+        const firstValue = parseFloat($firstSpan.text());
 
-      // Find the pack-related element
-      cy.contains(".list_title", packNameToCheck).then(($packElement) => {
-        // Traverse to the progress bar associated with this pack
-        const progressBar = $packElement
-          .closest(".single_list")
-          .find(".progress-bar");
+        cy.get(".list_info span:last-child").then(($secondSpan) => {
+          const secondValue = parseFloat($secondSpan.text());
 
-        // Get the width of the progress bar
-        const progressBarWidth = parseFloat(progressBar.css("width"));
-
-        // Assert the progress bar value is less than 100% (change the condition based on your requirement)
-        expect(progressBarWidth).to.be.lessThan(100);
+          expect(firstValue).to.be.lessThan(secondValue);
+        }); 
       });
     });
   });
@@ -207,7 +208,7 @@ function performTests(fixtureData) {
 }
 
 testData.forEach((fixture, index) => {
-  describe(`Fixture ${index + 1}`, () => {
-    performTests(fixture);
+  describe(`Pack Name: ${fixture.packName}`, () => {
+    performTests(fixture, index);
   });
 });

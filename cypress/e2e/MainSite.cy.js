@@ -1,29 +1,36 @@
 const { describe } = require("mocha");
-const testData = require("../fixtures/TestData.json");
 
 describe("Tests for Different Fixtures", () => {
-  testData.forEach((fixture, index) => {
-    it(`Test for Fixture ${index + 1}`, () => {
-      // Access each set of parameters from the fixture
-      const {
-        phoneNumber,
-        pack,
-        packName,
-        password,
-        packResource,
-        dashboardName,
-      } = fixture;
+  it("test check", () => {
+    cy.fixture("TestData.json").then((data) => {
+      cy.visit("https://www.ncell.axiata.com/en/auth/login");
 
-      // Perform tests using the specific parameters from the fixture
-      console.log(`Phone Number: ${phoneNumber}`);
-      console.log(`Pack: ${pack}`);
-      console.log(`Pack: ${packName}`);
-      console.log(`Pack: ${password}`);
-      console.log(`Pack: ${packResource}`);
-      console.log(`Pack: ${dashboardName}`);
+      cy.get('input[placeholder="Enter mobile number"]').type(
+        data[0].phoneNumber
+      );
+
+      cy.get('input[placeholder="Password"]').type(data[0].password);
+
+      cy.get("input.custom-control-input").check({
+        force: true,
+      });
+
+      cy.get('button[class="btn_primary blockEl"]').click();
+
+      cy.wait(7000);
+
+      cy.get(".main_details").children().should("have.length", 2);
+
+      cy.get(".list_title").contains("Elearning Data").should("exist");
+
+      cy.get(".list_title")
+        .contains("Elearning Data")
+        .parent() 
+        .within(() => {
+          cy.get(".list_info span:last-child").should("contain", "25.00 GB");
+        });
 
       cy.pause();
-      // ...perform other assertions or Cypress operations with the fixture data
     });
   });
 });

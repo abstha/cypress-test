@@ -3,16 +3,16 @@
     "pack" : "Rs. 998",
     "packName" : "1 Day - 250MB",
     "password" : "test12345@",
-    "packResource" : "250.00 MB",
-    "dashboardName" : "Of Rs 18 Data"
+    "packResource" : ["5.00 GB"],
+    "dashboardName" : ["WireFree_Add_Data"]
 },
 {
     "phoneNumber": 9800015053,
     "pack" : "Rs. 998",
     "packName" : "1 Day - 250MB",
     "password" : "test12345@",
-    "packResource" : "500.00 MB",
-    "dashboardName" : "Of Rs 25 Data"
+    "packResource" : ["50.00 GB","60.00 GB"],
+    "dashboardName" : ["Ultra Unlimited Data", "Ultra+Data"]
 }]
 
 

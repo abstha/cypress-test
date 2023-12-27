@@ -1,3 +1,19 @@
+//DEV notes:
+
+/*
+The following code is used to send the mochawesome report in the mail to
+the testers chosen email address.
+*/
+
+/* 
+The nodemailer package requires authentication for google Apis of gmail
+and oauth2 so if you were to add your own source email from which the mail
+is being sent, the account must have their own refresh token,client ID, client
+secret etc.
+This link will provide more detail on this topic.
+https://rupali.hashnode.dev/send-emails-in-nodejs-using-nodemailer-gmail-oauth2 
+*/
+
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
@@ -56,7 +72,7 @@ const sendMail = async () => {
       attachments: [
         {
           filename: "SanityTesting.html", // Name of the attached file
-          content: fs.createReadStream(filePath), // Read file content as stream
+          content: fs.createReadStream(filePath), 
         },
       ],
     };

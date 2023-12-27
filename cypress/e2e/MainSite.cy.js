@@ -1,7 +1,6 @@
 const { describe } = require("mocha");
 const dat = require("../fixtures/mock.json");
 
-
 function pt(fixtures, data) {
   describe("Tests for Different Fixtures", () => {
     it("test check", () => {
@@ -42,9 +41,28 @@ function pt(fixtures, data) {
               const num = parseFloat(val.match(/\d+\.\d+/)[0]);
               const inval = Math.floor(num);
               let bval = Math.floor(inval); // can be deleted
-              console.log(bval) //cannot be returned
+              console.log(bval); //cannot be returned
               let packVal = fixtures.packResource[i];
-              
+              //test code for subaccount verification
+              // cy.get(".list_title").forEach(($el) => {
+              //   const text = $el.text();
+              //   if (text === fixtures.dashboardName) {
+              //     console.log("pack name found");
+              //   } else {
+              //     cy.get(".dashboard_data_list")
+              //       .parent()
+              //       .within(() => {
+              //         cy.get(".list_title");
+              //       });
+              //   }
+              // });
+              // let cont = fixtures.packResource[i];
+              // if (cont != fixtures.pack) {
+              //   console.log("the pack price cannot be determined!");
+              // } else if (cont != fixtures.packName) {
+              //   console.log("error", cont);
+              // }
+              //till here
               const convNum = parseFloat(packVal.match(/\d+\.\d+/)[0]);
               const convVal = Math.floor(convNum);
 

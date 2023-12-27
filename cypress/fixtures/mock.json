@@ -3,14 +3,16 @@
     "pack" : "Rs. 998",
     "packName" : "1 Day - 250MB",
     "password" : "test12345@",
-    "packResource" : ["3.00 GB", "3.00 GB", "15.00 MB"],
-    "dashboardName" : ["1 hour 4G data", "1 hour data", "1 Hour Bucket"]
+    "packResource" : ["5.00 GB"],
+    "dashboardName" : ["WireFree_Add_Data"],
+    "pinNumber": 1728236920213
 },
 {
     "phoneNumber": 9800015053,
     "pack" : "Rs. 998",
     "packName" : "1 Day - 250MB",
     "password" : "test12345@",
-    "packResource" : ["200.00 GB"],
-    "dashboardName" : ["Of Nonstop Facebook YouTube"]  
+    "packResource" : ["50.00 GB","60.00 GB"],
+    "dashboardName" : ["Ultra Unlimited Data","Ultra+Data"],
+    "pinNumber": 2300123743792
 }]
